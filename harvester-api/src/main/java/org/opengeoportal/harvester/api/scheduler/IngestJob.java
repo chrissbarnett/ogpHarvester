@@ -134,7 +134,7 @@ public class IngestJob implements InterruptableJob, IngestJobFactorySetter {
 			job.setReportService(reportService);
 			job.setErrorService(errorService);
 			job.setWarningService(warningService);
-                        job.setExceptionTranslatorService(exceptionTranslator);
+            job.setExceptionTranslatorService(exceptionTranslator);
 
 			UUID jobUuid = UUID.randomUUID();
 			job.init(jobUuid, ingest, metadataIngester);

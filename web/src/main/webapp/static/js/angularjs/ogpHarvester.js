@@ -9,9 +9,9 @@
 			'ui.bootstrap',
 			'ogpHarvester.filters', 'ogpHarvester.services',
 			'ogpHarvester.services', 'ogpHarvester.directives',
-			'ogpHarvester.controllers', 'ogpHavester.controllers.adminCtrl',
-			'ogpHavester.controllers.editIngestCtrl', 'ui.select2',
-                        'ogpHavester.interceptors'
+			'ogpHarvester.controllers', 'ogpHarvester.controllers.adminCtrl',
+			'ogpHarvester.controllers.editIngestCtrl', 'ui.select2',
+                        'ogpHarvester.interceptors'
 		]).config(
 		['$routeProvider', '$locationProvider',
 			function($routeProvider, $locationProvider) {

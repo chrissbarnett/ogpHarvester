@@ -25,4 +25,27 @@
 			</tbody>
 		</table>
 	</div>
+	
+		<div>
+		<h2 data-translate="ADMIN.MY_DATASTORES_HEADER"></h2>
+		<div class="btn-toolbar">
+			<button class="btn btn-primary" data-ng-click="openNewDataStoreModal()" data-translate="ADMIN.ADD_NEW_DATASTORE_BUTTON"></button>
+		</div>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th data-translate="ADMIN.DS_TABLE_ROLE"></th>
+					<th data-translate="ADMIN.DS_TABLE_NAME"></th>
+					<th class="text-right" data-translate="ADMIN.DS_TABLE_REMOVE"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr data-ng-repeat="ds in dataStoreList">
+					<td data-translate="{{'ADMIN.NEW_DATASTORE_ROLE_' + ds.dsRole}}"></td>
+					<td>{{ds.value}}</td>
+					<td><button class="close" data-ng-click="deleteDs($index)">&times;</button></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </div>

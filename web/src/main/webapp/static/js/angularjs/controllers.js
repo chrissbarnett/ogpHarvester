@@ -620,7 +620,7 @@ var globalExtentMaxy;
             };
             
             /** Open a dialog that allows user add custom repositories to 
-             * OPG Name repository select.
+             * OGP Name repository select.
              */
             $scope.openWindowCustomRepo = function () {
             	var localIngest = $scope.ingest;

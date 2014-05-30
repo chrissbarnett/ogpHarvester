@@ -2,11 +2,11 @@
 	'use strict';
 
 	/**
-	 * ogpHavester.controllers.editIngestCtrl Module
+	 * ogpHarvester.controllers.editIngestCtrl Module
 	 *
 	 * Description
 	 */
-	var editIngestModule = angular.module('ogpHavester.controllers.editIngestCtrl', ['ogpHarvester.services', 'ngRoute',
+	var editIngestModule = angular.module('ogpHarvester.controllers.editIngestCtrl', ['ogpHarvester.services', 'ngRoute',
 		'ui.bootstrap', 'pascalprecht.translate'
 	]);
 

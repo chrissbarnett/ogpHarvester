@@ -276,4 +276,57 @@
 
 		}
 	]);
+	
+	servicesModule.service('dataStoreNodes', ['$http', '$q',
+	                                      		function($http, $q) {
+	                                      			// Private data
+
+
+	                                      			// Public interface
+	                                      			return {
+
+	                                      				getDataStoreList: function() {
+	                                      					var deferred = $q.defer();
+
+	                                      					// Calling Datastores services to fetch datastore list
+	                                      					$http.get('rest/datastores').success(function(data) {
+	                                      						// Passing data to deferred's resolve function on successful completion
+	                                      						deferred.resolve(data);
+	                                      					}).error(function() {
+	                                      						// Sending a friendly error message in case of failure
+	                                      						deferred.reject("An error occured while fetching datastores");
+	                                      					});
+
+	                                      					return deferred.promise;
+	                                      				},
+
+	                                      				save: function(datastore) {
+	                                      					var deferred = $q.defer();
+
+	                                      					$http.post('rest/datastores', datastore).success(function(data) {
+	                                      						deferred.resolve(data);
+	                                      					}).error(function() {
+	                                      						deferred.reject("An error occured while creating datastore");
+	                                      					});
+
+	                                      					return deferred.promise;
+	                                      				},
+	                                      				remove: function(id) {
+	                                      					var deferred = $q.defer();
+
+	                                      					$http.delete('rest/datastores/' + id).success(function(data) {
+	                                      						deferred.resolve(data);
+	                                      					}).error(function(data, status, headers, config) {
+	                                      						if (status == 404) {
+	                                      							deferred.reject("The datastore you are trying to remove does not exist anymore. You can dismiss this window.");
+	                                      						} else {
+	                                      							deferred.reject("An error occured while removing the datastore");
+	                                      						}
+	                                      					});
+	                                      					return deferred.promise;
+
+	                                      				}
+	                                      			};
+	                                      		}
+	                                      	]);
 })();

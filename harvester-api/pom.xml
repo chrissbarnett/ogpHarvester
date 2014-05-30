@@ -26,6 +26,7 @@
 		<jodatime.version>2.3</jodatime.version>
 		<quartz.version>2.2.1</quartz.version>
 		<flyway.version>2.3.1</flyway.version>
+		<jackson.version>2.3.2</jackson.version>
 	</properties>
 
 	<dependencies>
@@ -63,6 +64,11 @@
 			<version>${spring.version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
 
 		<!-- Spring Data JPA -->
 		<dependency>
@@ -110,6 +116,18 @@
 			<version>1.1</version>
 		</dependency>
 
+		<!-- JSON -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+		
 		<!-- Hibernate -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -117,7 +135,7 @@
 			<version>${hibernate.version}</version>
 		</dependency>
 
-		<!-- Sorl -->
+		<!-- Solr -->
 		<dependency>
 			<groupId>org.apache.solr</groupId>
 			<artifactId>solr-solrj</artifactId>

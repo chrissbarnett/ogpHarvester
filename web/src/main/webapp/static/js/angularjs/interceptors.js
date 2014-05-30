@@ -1,7 +1,7 @@
 (function() {
     'use strict';
     
-    var interceptorsModule = angular.module('ogpHavester.interceptors', []);
+    var interceptorsModule = angular.module('ogpHarvester.interceptors', []);
     
     interceptorsModule.factory('sessionExpiredInterceptor',['$q', '$window', 
         function($q, $window) {

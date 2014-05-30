@@ -1,0 +1,111 @@
+<div class="modal-header">
+    <h2>{{ "ADMIN.NEW_DATASTORE_HEADER" | translate}} <a
+                data-tooltip='{{ "ADMIN.NEW_DATASTORE_HEADER_TOOLTIP" | translate }}'><span
+                class="glyphicon glyphicon-question-sign black"></span></a></h2>
+</div>
+<form name="form" data-rc-submit="createDsNode()" novalidate>
+	<div class="modal-body">
+		<div data-alert data-ng-repeat="alert in alerts" data-type="alert.type" data-close="closeAlert($index)">{{alert.msg}}</div>
+
+		
+		<div class="form-group"  data-ng-class="{'has-error': rc.form.needsAttention(form.serverUrl)}">
+			<label for="serverUrl" class="control-label"  data-translate="ADMIN.NEW_DATASTORE_URL"></label>
+			<input type="url" class="form-control" data-ng-model="newDsNode.serverUrl" id="serverUrl" name="serverUrl" required></input>
+		</div> 
+		
+		<div class="form-group" data-ng-class="{'has-error': rc.form.needsAttention(form.username)}">
+			<label for="newDsUsername" class="control-label"  data-translate="ADMIN.NEW_DATASTORE_USERNAME"></label>
+			<input type="text" class="form-control" data-ng-model="newDsNode.username" id="newDsUsername" name="username" required></input>
+		</div>
+		
+		<div class="form-group" data-ng-class="{'has-error': rc.form.needsAttention(form.password)}">
+			<label for="newDsPassword" class="control-label"  data-translate="ADMIN.NEW_DATASTORE_PASSWORD"></label>
+			<input type="text" class="form-control" data-ng-model="newDsNode.userPassword" id="newDsPassword" name="password" required></input>
+		</div>
+
+		<div class="form-group" data-ng-class="{'has-error': rc.form.needsAttention(form.workspacePrefix)}">
+			<label for="newDsWorkspacePrefix" class="control-label"  data-translate="ADMIN.NEW_DATASTORE_WORKSPACE"></label>
+			<input type="text" class="form-control" data-ng-model="newDsNode.workspacePrefix" id="newDsWorkspacePrefix" name="workspacePrefix" required></input>
+		</div>
+		
+		<div class="form-group" data-ng-class="{'has-error': rc.form.needsAttention(form.storeType)}" > 
+			<span data-translate="ADMIN.NEW_DATASTORE_STORE_TYPE"></span>
+			<input type="radio" data-ng-model="newDsNode.storeType" data-ng-value="storeTypeValue.db" data-translate="ADMIN.TODS_DB"><br/>
+  			<input type="radio" data-ng-model="newDsNode.storeType" data-ng-value="storeTypeValue.file" data-translate="ADMIN.TODS_FILE"><br/>
+		</div>
+		
+		<div class="form-group" data-ng-class="{'has-error': rc.form.needsAttention(form.name)}">
+			<label for="newDsName" class="control-label"  data-translate="ADMIN.NEW_DATASTORE_DSNAME"></label>
+			<input type="text" class="form-control" data-ng-model="newDsNode.name" id="newDsName" name="name" ></input>
+		</div>
+		
+		<div class="form-group" data-ng-class="{'has-error': rc.form.needsAttention(form.role)}" > 
+			<span data-translate="ADMIN.NEW_DATASTORE_ROLE"></span>
+			<input type="radio" data-ng-model="newDsNode.role" data-ng-value="roleValue.pubVector" data-translate="ADMIN.NEW_DATASTORE_ROLE_PUBLIC_VECTOR"><br/>
+  			<input type="radio" data-ng-model="newDsNode.role" data-ng-value="roleValue.restVector" data-translate="ADMIN.NEW_DATASTORE_ROLE_RESTRICTED_VECTOR"><br/>
+  			<input type="radio" data-ng-model="newDsNode.role" data-ng-value="roleValue.pubRaster" data-translate="ADMIN.NEW_DATASTORE_ROLE_PUBLIC_RASTER"><br/>
+  			<input type="radio" data-ng-model="newDsNode.role" data-ng-value="roleValue.restRaster" data-translate="ADMIN.NEW_DATASTORE_ROLE_RESTRICTED_RASTER"><br/>
+  						
+		</div>
+		
+	</div>
+	<div class="modal-footer">
+	    <button class="btn btn-primary" data-translate="ADMIN.NEW_DATASTORE_CREATE" data-ng-disabled="disableCreateButton"></button>
+	    <button class="btn btn-default" data-translate="ADMIN.NEW_DATASTORE_CANCEL" data-ng-click="cancel()"></button>
+	</div>
+</form>
+	<script>			
+	
+	var NewDataStoreNodeForm = function($scope, $modalInstance) {
+					$scope.alerts = [];
+					$scope.closeAlert = function(index) {
+						$scope.alerts.splice(index, 1);
+					};
+					
+					$scope.storeTypeValue = {
+						db: "DATABASE",
+						file: "FILE"
+					};
+					
+					$scope.roleValue = {
+							pubVector: "PUBLIC_VECTOR",
+							pubRaster: "PUBLIC_RASTER",
+							restVector: "RESTRICTED_VECTOR",
+							restRaster: "RESTRICTED_RASTER"
+					};
+					
+					//this is the object to be submitted by the form
+					$scope.newDsNode = {};
+
+					$scope.cancel = function() {
+						$modalInstance.dismiss('cancel');
+					};
+					$scope.createDsNode = function() {
+						$log.info("Creating datastore node");
+						$scope.disableCreateButton = true;
+						$scope.alerts = [];
+						$scope.savedDsNode = remoteRepositories.save($scope.newDsNode).then(function(data) {
+							if (data.status === 'SUCCESS') {
+								$modalInstance.close(data.result);
+							} else {
+								$scope.alerts = [];
+								for (var i = 0; i < data.result.length; i++) {
+									$scope.alerts.push({
+										type: "danger",
+										msg: $translate("ADMIN." + data.result[i].code, data.result[i])
+									});
+								}
+								$scope.disableCreateButton = false;
+							}
+						}, function(cause) {
+							$scope.alerts.push({
+								type: "danger",
+								msg: cause
+							});
+							$scope.disableCreateButton = false;
+						});
+
+					};
+				};
+				
+				</script>
